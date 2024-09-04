@@ -27,7 +27,8 @@ import {
   GetFeedPath,
   GetFeedResponse,
   GetFeedsQuery,
-  GetFeedsResponse
+  GetFeedsResponse,
+  GetSmallAndLightFeePreviewBody
 } from "./operations/feeds";
 import { Config, DownloadOptions } from "./baseTypes";
 import {
@@ -45,8 +46,6 @@ import {
   EstimateTransportResponse,
   GetBillOfLadingPath,
   GetBillOfLadingResponse,
-  GetInboundGuidanceQuery,
-  GetInboundGuidanceResponse,
   GetLabelsPath,
   GetLabelsQuery,
   GetLabelsResponse,
@@ -83,30 +82,23 @@ import {
   ReportDocument
 } from "./operations/reports";
 import {
-  DeleteSmallAndLightEnrollmentBySellerSKUPath,
-  DeleteSmallAndLightEnrollmentBySellerSKUQuery,
-  GetSmallAndLightEligibilityBySellerSKUPath,
-  GetSmallAndLightEligibilityBySellerSKUQuery,
-  GetSmallAndLightEligibilityBySellerSKUResponse,
-  GetSmallAndLightEnrollmentBySellerSKUPath,
-  GetSmallAndLightEnrollmentBySellerSKUQuery,
-  GetSmallAndLightEnrollmentBySellerSKUResponse,
-  GetSmallAndLightFeePreviewBody,
-  GetSmallAndLightFeePreviewResponse,
-  PutSmallAndLightEnrollmentBySellerSKUPath,
-  PutSmallAndLightEnrollmentBySellerSKUQuery,
-  PutSmallAndLightEnrollmentBySellerSKUResponse
-} from "./operations/fbaSmallAndLight";
-import {
-  GetAuthorizationCodeQuery,
-  GetAuthorizationCodeResponse
-} from "./operations/authorization";
-import {
   GetCatalogItemPath,
   GetCatalogItemQuery,
   GetCatalogItemResponse,
   ListCatalogCategoriesQuery,
-  ListCatalogCategoriesResponse
+  ListCatalogCategoriesResponse,
+  GetSmallAndLightEnrollmentBySellerSKUResponse,
+  PutSmallAndLightEnrollmentBySellerSKUResponse,
+  GetSmallAndLightEligibilityBySellerSKUResponse,
+  GetSmallAndLightFeePreviewResponse,
+  GetSmallAndLightEnrollmentBySellerSKUQuery,
+  PutSmallAndLightEnrollmentBySellerSKUQuery,
+  DeleteSmallAndLightEnrollmentBySellerSKUQuery,
+  GetSmallAndLightEligibilityBySellerSKUQuery,
+  GetSmallAndLightEnrollmentBySellerSKUPath,
+  PutSmallAndLightEnrollmentBySellerSKUPath,
+  DeleteSmallAndLightEnrollmentBySellerSKUPath,
+  GetSmallAndLightEligibilityBySellerSKUPath
 } from "./operations/catalogItems";
 import {
   GetInventorySummariesQuery,
@@ -141,6 +133,8 @@ import {
   GetItemOffersResponse
 } from "./operations/productPricing";
 
+import { GetMarketplaceParticipationsResponse } from "./operations/sellers";
+
 declare module "amazon-sp-api" {
   export class SellingPartner {
     constructor(config: Config);
@@ -173,7 +167,6 @@ declare module "amazon-sp-api" {
   }
 
   type Operation =
-    | "getAuthorizationCode"
     | "getCatalogItem"
     | "listCatalogCategories"
     | "getItemEligibilityPreview"
@@ -192,7 +185,6 @@ declare module "amazon-sp-api" {
     | "listFinancialEventsByGroupId"
     | "listFinancialEventsByOrderId"
     | "listFinancialEvents"
-    | "getInboundGuidance"
     | "updateInboundShipment"
     | "createInboundShipment"
     | "getPreorderInfo"
@@ -219,11 +211,10 @@ declare module "amazon-sp-api" {
     | "getShipmentItems"
     | "getItemOffers"
     | "productPricing.getItemOffers"
+    | "getMarketplaceParticipations"
     | string;
 
-  type ObjectType<TOperation> = TOperation extends "getAuthorizationCode"
-    ? GetAuthorizationCodeResponse
-    : TOperation extends "getCatalogItem"
+  type ObjectType<TOperation> = TOperation extends "getCatalogItem"
     ? GetCatalogItemResponse
     : TOperation extends "listCatalogCategories"
     ? ListCatalogCategoriesResponse
@@ -259,8 +250,6 @@ declare module "amazon-sp-api" {
     ? ListFinancialEventsByOrderIdResponse
     : TOperation extends "listFinancialEvents"
     ? ListFinancialEventsResponse
-    : TOperation extends "getInboundGuidance"
-    ? GetInboundGuidanceResponse
     : TOperation extends "updateInboundShipment"
     ? UpdateInboundShipmentResponse
     : TOperation extends "createInboundShipment"
@@ -318,12 +307,12 @@ declare module "amazon-sp-api" {
     ? GetItemOffersResponse
     : TOperation extends "createReport"
     ? CreateReportResponse
+    : TOperation extends "getMarketplaceParticipations"
+    ? GetMarketplaceParticipationsResponse
     : any;
 
   type QueryType<TOperation extends Operation> =
-    TOperation extends "getAuthorizationCode"
-      ? GetAuthorizationCodeQuery
-      : TOperation extends "getCatalogItem"
+    TOperation extends "getCatalogItem"
       ? GetCatalogItemQuery
       : TOperation extends "listCatalogCategories"
       ? ListCatalogCategoriesQuery
@@ -349,8 +338,6 @@ declare module "amazon-sp-api" {
       ? ListFinancialEventsByOrderIdQuery
       : TOperation extends "listFinancialEvents"
       ? ListFinancialEventsQuery
-      : TOperation extends "getInboundGuidance"
-      ? GetInboundGuidanceQuery
       : TOperation extends "getPreorderInfo"
       ? GetPreorderInfoQuery
       : TOperation extends "confirmPreorder"

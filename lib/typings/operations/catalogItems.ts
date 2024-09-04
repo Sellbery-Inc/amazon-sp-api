@@ -1,4 +1,4 @@
-import { BaseResponse } from "../baseTypes";
+import type { BaseResponse } from "../baseTypes";
 
 export interface GetCatalogItemQuery {
   includedData?: string;
@@ -22,6 +22,42 @@ export interface ListCatalogCategoriesQuery {
 
 export interface ListCatalogCategoriesResponse extends BaseResponse {
   payload?: Category[];
+}
+
+export interface GetSmallAndLightEnrollmentBySellerSKUResponse extends BaseResponse {
+}
+
+export interface PutSmallAndLightEnrollmentBySellerSKUResponse extends BaseResponse {
+}
+
+export interface GetSmallAndLightEligibilityBySellerSKUResponse extends BaseResponse {
+}
+
+export interface GetSmallAndLightFeePreviewResponse extends BaseResponse {
+}
+
+export interface GetSmallAndLightEnrollmentBySellerSKUQuery {
+}
+
+export interface PutSmallAndLightEnrollmentBySellerSKUQuery {
+}
+
+export interface DeleteSmallAndLightEnrollmentBySellerSKUQuery {
+}
+
+export interface GetSmallAndLightEligibilityBySellerSKUQuery {
+}
+
+export interface GetSmallAndLightEnrollmentBySellerSKUPath {
+}
+
+export interface PutSmallAndLightEnrollmentBySellerSKUPath {
+}
+
+export interface DeleteSmallAndLightEnrollmentBySellerSKUPath {
+}
+
+export interface GetSmallAndLightEligibilityBySellerSKUPath {
 }
 
 interface Category {
@@ -207,11 +243,4 @@ interface Relationship {
 interface SalesRank {
   ProductCategoryId?: string;
   Rank?: number;
-}
-
-interface ListCatalogItem {
-  Identifiers: IdentifierType;
-  AttributeSets?: AttributeSet[];
-  Relationships: Relationship[];
-  SalesRankings: SalesRank[];
 }
